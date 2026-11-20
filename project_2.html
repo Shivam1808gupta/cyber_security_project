@@ -1,0 +1,730 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cyber Number Intelligence</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #050b18;
+    color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: #0077ff;
+    filter: blur(180px);
+    opacity: 0.2;
+    top: -150px;
+    left: -100px;
+    z-index: -1;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    background: #00e5ff;
+    filter: blur(170px);
+    opacity: 0.15;
+    bottom: -150px;
+    right: -100px;
+    z-index: -1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* LOGIN PAGE */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 30px;
+    background: rgba(13, 28, 52, 0.9);
+    border: 1px solid #1765a5;
+    border-radius: 20px;
+    box-shadow: 0 0 35px rgba(0, 150, 255, 0.2);
+    text-align: center;
+    animation: appear 1s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo {
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+.login-box h1 {
+    color: #00d9ff;
+    margin-bottom: 10px;
+}
+
+.login-box p {
+    color: #a8bad0;
+    margin-bottom: 25px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    background: #071426;
+    border: 1px solid #1765a5;
+    color: white;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    margin-bottom: 18px;
+}
+
+input:focus {
+    border-color: #00e5ff;
+    box-shadow: 0 0 12px #0077ff;
+}
+
+button {
+    background: linear-gradient(90deg, #0077ff, #00d9ff);
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 20px #0077ff;
+}
+
+.login-box button {
+    width: 100%;
+}
+
+#error {
+    color: #ff7777;
+    margin-top: 15px;
+}
+
+/* DASHBOARD */
+
+header {
+    background: rgba(8, 22, 43, 0.95);
+    border-bottom: 1px solid #1765a5;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+header h2 {
+    color: #00d9ff;
+}
+
+header span {
+    color: #00ffad;
+    font-size: 13px;
+}
+
+.logout {
+    background: #b72c42;
+    padding: 10px 17px;
+}
+
+.dashboard {
+    width: 90%;
+    max-width: 1050px;
+    margin: 45px auto;
+    animation: appear 0.8s ease;
+}
+
+.welcome {
+    margin-bottom: 30px;
+}
+
+.welcome h1 {
+    font-size: 30px;
+    color: #00d9ff;
+    margin-bottom: 10px;
+}
+
+.welcome p {
+    color: #9eb0c9;
+}
+
+.search-card {
+    background: rgba(13, 28, 52, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #1765a5;
+    margin-bottom: 30px;
+}
+
+.search-card h2 {
+    margin-bottom: 20px;
+}
+
+.search-row {
+    display: flex;
+    gap: 12px;
+}
+
+.search-row input {
+    margin: 0;
+}
+
+.search-row button {
+    min-width: 150px;
+}
+
+#loading {
+    display: none;
+    text-align: center;
+    padding: 25px;
+    color: #00d9ff;
+}
+
+.loader {
+    border: 4px solid #233b59;
+    border-top: 4px solid #00d9ff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 0.8s linear infinite;
+    margin: auto auto 12px;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.result-card {
+    background: rgba(13, 28, 52, 0.95);
+    border: 1px solid #1765a5;
+    border-radius: 15px;
+    padding: 30px;
+    display: none;
+    animation: appear 0.7s ease;
+}
+
+.result-card h2 {
+    color: #00d9ff;
+    margin-bottom: 20px;
+}
+
+.profile {
+    background: #0a1a30;
+    border: 1px solid #234b70;
+    padding: 22px;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.info small {
+    color: #8ba8c7;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.info h3 {
+    color: white;
+    font-size: 17px;
+    word-break: break-word;
+}
+
+.status {
+    padding: 18px;
+    margin-top: 22px;
+    border-radius: 10px;
+    background: #122b3b;
+    border: 1px solid #00bfff;
+}
+
+.status h3 {
+    color: #00d9ff;
+    margin-bottom: 8px;
+}
+
+.warning {
+    color: #ffc75e;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 15px;
+}
+
+footer {
+    text-align: center;
+    color: #8298b3;
+    padding: 30px;
+    margin-top: 50px;
+}
+
+@media(max-width:600px) {
+    .search-row {
+        flex-direction: column;
+    }
+
+    .profile {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .welcome h1 {
+        font-size: 24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+
+<section class="login-page" id="loginPage">
+
+    <div class="login-box">
+
+        <div class="logo">🛡️</div>
+
+        <h1>CYBER INTEL</h1>
+
+        <p>Mobile Number Intelligence System</p>
+
+        <form onsubmit="login(event)">
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter a strong password"
+                required
+            >
+
+            <button type="submit">
+                ACCESS DASHBOARD →
+            </button>
+
+        </form>
+
+        <div id="error"></div>
+
+        <p style="font-size:12px;margin-top:20px;">
+            Educational Demo Login
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboardPage" class="hidden">
+
+    <header>
+
+        <h2>🛡️ CYBER INTEL</h2>
+
+        <span>● SYSTEM ONLINE</span>
+
+        <button class="logout" onclick="logout()">
+            LOGOUT
+        </button>
+
+    </header>
+
+
+    <main class="dashboard">
+
+        <div class="welcome">
+
+            <h1>Welcome to Cyber Dashboard</h1>
+
+            <p>
+                Mobile Number Fraud Awareness &
+                Sample Intelligence Checker
+            </p>
+
+        </div>
+
+
+        <div class="search-card">
+
+            <h2>📱 Mobile Number Search</h2>
+
+            <p style="color:#9eb0c9;margin-bottom:20px;">
+                Enter a 10-digit Indian mobile number.
+            </p>
+
+            <div class="search-row">
+
+                <input
+                    type="tel"
+                    id="mobileNumber"
+                    maxlength="10"
+                    placeholder="Enter mobile number"
+                >
+
+                <button onclick="searchNumber()">
+                    CHECK NUMBER
+                </button>
+
+            </div>
+
+            <div id="loading">
+
+                <div class="loader"></div>
+
+                Analyzing sample data...
+
+            </div>
+
+        </div>
+
+
+        <!-- RESULTS -->
+
+        <div class="result-card" id="resultCard">
+
+            <h2>📊 Sample Intelligence Report</h2>
+
+            <div class="profile">
+
+                <div class="info">
+                    <small>SEARCHED NUMBER</small>
+                    <h3 id="searchedNumber"></h3>
+                </div>
+
+                <div class="info">
+                    <small>DEMO PROFILE NAME</small>
+                    <h3 id="personName"></h3>
+                </div>
+
+                <div class="info">
+                    <small>MASKED SAMPLE NUMBER</small>
+                    <h3 id="maskedNumber"></h3>
+                </div>
+
+                <div class="info">
+                    <small>SAMPLE EMAIL</small>
+                    <h3 id="email"></h3>
+                </div>
+
+                <div class="info">
+                    <small>DEMO CITY</small>
+                    <h3 id="location"></h3>
+                </div>
+
+                <div class="info">
+                    <small>DEMO RISK LEVEL</small>
+                    <h3 id="risk"></h3>
+                </div>
+
+            </div>
+
+
+            <div class="status">
+
+                <h3 id="statusTitle"></h3>
+
+                <p id="statusText"></p>
+
+            </div>
+
+
+            <p class="warning">
+
+                ⚠️ IMPORTANT: All names, emails, masked
+                numbers, locations and risk levels shown
+                here are randomly generated fictional
+                demonstration data. They are not linked
+                to the searched person's real identity,
+                mobile number or location.
+
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 Cyber Intel | BCA Cyber Security Project
+        </p>
+
+        <p style="margin-top:8px;">
+            Stay Alert • Stay Secure • Stay Protected
+        </p>
+
+    </footer>
+
+</section>
+
+
+<script>
+
+// LOGIN SYSTEM
+// This is a demo login, not real authentication.
+
+function login(event) {
+
+    event.preventDefault();
+
+    let password =
+        document.getElementById("password").value;
+
+    let error =
+        document.getElementById("error");
+
+    // Strong password validation
+    let strongPassword =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$/;
+
+    if(strongPassword.test(password)) {
+
+        document.getElementById("loginPage")
+        .classList.add("hidden");
+
+        document.getElementById("dashboardPage")
+        .classList.remove("hidden");
+
+        error.innerText = "";
+
+    }
+
+    else {
+
+        error.innerText =
+        "Password must have 8 characters, uppercase, lowercase, number and special character.";
+
+    }
+
+}
+
+
+// LOGOUT
+
+function logout() {
+
+    document.getElementById("dashboardPage")
+    .classList.add("hidden");
+
+    document.getElementById("loginPage")
+    .classList.remove("hidden");
+
+    document.getElementById("password").value = "";
+
+    document.getElementById("mobileNumber").value = "";
+
+    document.getElementById("resultCard")
+    .style.display = "none";
+
+}
+
+
+// RANDOM DATA
+
+const names = [
+    "Aarav Sharma",
+    "Rohan Verma",
+    "Priya Singh",
+    "Ananya Gupta",
+    "Rahul Kumar",
+    "Sneha Patel",
+    "Arjun Mehta",
+    "Neha Sharma",
+    "Vikram Singh",
+    "Isha Kapoor"
+];
+
+const cities = [
+    "Delhi",
+    "Mumbai",
+    "Jaipur",
+    "Lucknow",
+    "Ghaziabad",
+    "Noida",
+    "Pune",
+    "Bhopal",
+    "Chandigarh",
+    "Agra"
+];
+
+const domains = [
+    "example.com",
+    "demo.test",
+    "sample.invalid"
+];
+
+function randomItem(array) {
+
+    return array[
+        Math.floor(Math.random() * array.length)
+    ];
+
+}
+
+
+// SEARCH FUNCTION
+
+function searchNumber() {
+
+    let mobile =
+    document.getElementById("mobileNumber").value;
+
+    let loading =
+    document.getElementById("loading");
+
+    let result =
+    document.getElementById("resultCard");
+
+
+    // NUMBER VALIDATION
+
+    if(!/^[6-9][0-9]{9}$/.test(mobile)) {
+
+        alert("Please enter a valid 10-digit Indian mobile number.");
+
+        return;
+
+    }
+
+
+    result.style.display = "none";
+
+    loading.style.display = "block";
+
+
+    // DEMO SCAN ANIMATION
+
+    setTimeout(function() {
+
+        loading.style.display = "none";
+
+
+        // RANDOM FICTIONAL PROFILE
+
+        let name = randomItem(names);
+
+        let city = randomItem(cities);
+
+        let domain = randomItem(domains);
+
+        let username =
+        name.toLowerCase().replace(" ", ".");
+
+        let email =
+        username + "@" + domain;
+
+
+        // MASKED DEMO NUMBER
+
+        let masked =
+        mobile.substring(0,2) +
+        "XXXXXX" +
+        mobile.substring(8);
+
+
+        // RANDOM DEMO RISK
+
+        let risks = [
+            "LOW - Demo Risk",
+            "MEDIUM - Demo Risk",
+            "HIGH - Demo Risk"
+        ];
+
+        let risk = randomItem(risks);
+
+
+        // DISPLAY INFORMATION
+
+        document.getElementById("searchedNumber")
+        .innerText = mobile;
+
+        document.getElementById("personName")
+        .innerText = name;
+
+        document.getElementById("maskedNumber")
+        .innerText = masked;
+
+        document.getElementById("email")
+        .innerText = email;
+
+        document.getElementById("location")
+        .innerText = city;
+
+        document.getElementById("risk")
+        .innerText = risk;
+
+
+        document.getElementById("statusTitle")
+        .innerText = "DEMO ANALYSIS COMPLETED";
+
+        document.getElementById("statusText")
+        .innerText =
+        "Random sample profile generated successfully. No real-world fraud verification was performed.";
+
+
+        result.style.display = "block";
+
+        result.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }, 1800);
+
+}
+
+</script>
+
+</body>
+</html>
